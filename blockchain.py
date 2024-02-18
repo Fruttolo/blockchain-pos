@@ -11,8 +11,10 @@ class Blockchain:
         self.chain = [self.createGenesisBlock(200)] # The first block in the chain with a reward of 200 for each initial validator
 
 
+    # Create the first block in the chain
     def createGenesisBlock(self, initailReward):
         initialTransactions = []
+        # Create a transaction for each validator
         for validator in self.validators:
             initialTransactions.append(Transaction(validator.getStakePublicKey(), None, initailReward))
         firstValidator = self.validators[0]
@@ -21,6 +23,7 @@ class Blockchain:
     def getLatestBlock(self):
         return self.chain[len(self.chain) - 1]
     
+    # Choose the validator with the most stake
     def chooseValidator(self):
         if len(self.validators) == 0:
             return None
@@ -34,11 +37,11 @@ class Blockchain:
         return None
     
     def minePendingTransactions(self):
-        currentValidator = self.getLatestBlock().nextValidatorPublicKey
+        currentValidator = self.getLatestBlock().nextValidatorPublicKey # Get the current validator
         if currentValidator == None:
             print("No validators")
             return
-        nextValidator = self.chooseValidator()
+        nextValidator = self.chooseValidator() # Choose the next validator
         # Create a new block with the pending transactions and mine it
         block = Block(self.pendingTransactions, self.getLatestBlock().hash, currentValidator, nextValidator.getStakePublicKey())
         block.mineBlock(self.difficulty)

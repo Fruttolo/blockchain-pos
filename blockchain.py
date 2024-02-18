@@ -48,27 +48,11 @@ class Blockchain:
         self.chain.append(block)
         self.pendingTransactions = [Transaction(currentValidator, None, self.stakingRewars)]
 
-    def stake(self, wallet, amount):
-        if wallet.getBalance(self) < amount:
-            print("Not enough money to stake")
-            return
-        transaction = wallet.stakeMoney(amount)
-        self.addTransaction(transaction)
-        if wallet.getStakePublicKey() not in self.validators:
-            self.validators.append(wallet)
+    def addStaker(self, staker):
+        self.validators.append(staker)
 
-    def unstake(self, wallet, amount):
-        for validator in self.validators:
-            if validator.getPublicKey() == wallet.getPublicKey():
-                if validator.getStaked(self) < amount:
-                    print("Not enough money to unstake")
-                    return
-                transaction = validator.unstakeMoney(amount)
-                self.addTransaction(transaction)
-                if validator.getStaked(self) == 0:
-                    self.validators.remove(validator)
-                return
-        print("Validator not found")
+    def removeStaker(self, staker):
+        self.validators.remove(staker)
 
     def addTransaction(self, transaction):
         if transaction.verifyTransaction() == False:

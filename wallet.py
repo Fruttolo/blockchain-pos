@@ -20,15 +20,18 @@ class Wallet:
     def getStakePublicKey(self):
         return self.stakePublicKey
     
-    def stakeMoney(self, amount):
+    def stakeMoney(self, blockchain, amount):
         transaction = Transaction(self.stakePublicKey, self.publicKey, amount)
         transaction.signTransaction(self.privateKey)
-        return transaction
+        blockchain.addTransaction(transaction)
+        blockchain.addStaker(self)
 
-    def unstakeMoney(self, amount):
+    def unstakeMoney(self, blockchain, amount):
         transaction = Transaction(self.publicKey, self.stakePublicKey, amount)
         transaction.signTransaction(self.stakePrivateKey)
-        return transaction
-
+        blockchain.addTransaction(transaction)
+        if (self.getStaked(blockchain) == 0):
+            blockchain.removeStaker(self)
+        
     def getStaked(self, blockchain):
         return blockchain.getBalanceOfAddress(self.stakePublicKey)

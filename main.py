@@ -17,9 +17,9 @@ for i in range(5):
     print("Wallet 2 staked: " + str(wallet2.getStaked(blockchain)))
     print("Wallet 3 staked: " + str(wallet3.getStaked(blockchain)))
 
-    blockchain.unstake(wallet1, 15) 
-    blockchain.unstake(wallet2, 20) 
-    blockchain.unstake(wallet3, 50) 
+    wallet1.unstakeMoney(blockchain, 15)
+    wallet2.unstakeMoney(blockchain, 20)
+    wallet3.unstakeMoney(blockchain, 50)
 
     transaction1 = wallet1.sendMoney(wallet2.getPublicKey(), 40)
     transaction2 = wallet2.sendMoney(wallet3.getPublicKey(), 10)

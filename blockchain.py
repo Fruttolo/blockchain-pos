@@ -94,4 +94,6 @@ class Blockchain:
             print("Transactions: " + block.getTransactionsToString())
             print("Nonce: " + str(block.nonce))
             print("Hash: " + block.hash)
+            print("Validator: " + str(block.validatorPublicKey))
+            print("Next Validator: " + str(block.nextValidatorPublicKey))
             print("\n")

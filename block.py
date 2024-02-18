@@ -28,7 +28,7 @@ class Block:
     def getTransactionsToString(self):
         transactionsString = ""
         for transaction in self.transactions:
-            transactionsString += transaction.getTransactionWithSignature()
+            transactionsString += transaction.getTransactionWithSignature() + " "
         return transactionsString
     
     def getBlockToString(self):
